@@ -2,7 +2,7 @@
 
 **OncoDevFormer** is a representation-learning framework designed to compare developmental epithelial variation with malignant cell-state variation in pancreatic cancer. The project uses single-cell RNA-seq data from normal pancreatic development and pancreatic cancer to ask a central question: **do malignant epithelial states recapitulate developmental trajectories, or do they occupy distinct transcriptional directions?**
 
-The analysis combines developmental reference modeling, BERT-style embedding approaches, geometric comparisons in learned expression spaces, and biological annotation using curated gene programs. Rather than treating cancer states as simple reactivations of development, **DevCancer** separates two related but different concepts: where malignant cells lie relative to developmental cell states, and whether malignant transitions actually follow developmental axes.
+The analysis combines developmental reference modeling, BERT-style embedding approaches, geometric comparisons in learned expression spaces, and biological annotation using curated gene programs. Rather than treating cancer states as simple reactivations of development, **OncoDevFormer** separates two related but different concepts: where malignant cells lie relative to developmental cell states, and whether malignant transitions actually follow developmental axes.
 
 ---
 
@@ -15,9 +15,9 @@ The project builds a developmental reference space from normal epithelial popula
 The main goals are to:
 
 - assemble and preprocess developmental and cancer single-cell datasets;
-- train or apply a BERT-style language model to single-cell gene-expression representations;
-- extract gene and cell embeddings from the model;
-- define developmental epithelial axes, including foregut-to-ductal, foregut-to-acinar/tip, and foregut-to-biliary directions;
+- train a BERT-style language model to single-cell gene-expression representations;
+- extract classification-token (CLS) cell embeddings from the model;
+- define developmental epithelial axes, including foregut-to-ductal, foregut-to-acinar, and foregut-to-biliary directions;
 - compare malignant-state transitions with developmental directions;
 - distinguish developmental positioning from malignant-state variation;
 - annotate learned axes and residual cancer structure using curated biological programs.
@@ -31,10 +31,12 @@ Together, the analyses test whether pancreatic cancer progression is well descri
 The project uses single-cell RNA-seq datasets representing two biological contexts:
 
 1. **Normal pancreatic development**  
-   Developmental epithelial populations are used to construct a reference space capturing major axes of normal pancreas and foregut-related variation.
+   Developmental epithelial populations were used to construct a reference capturing the major axes of normal pancreatic and foregut variation.
+   This single‑cell timelapse of mouse prenatal development —from gastrula to birth— was produced by Jay Shendure’s lab, Department of Genome Sciences, University of Washington. Description of the project is available [here](https://omg.gs.washington.edu/jax/public/about.html), and the dataset used [here](https://shendure-web.gs.washington.edu/content/members/cxqiu/public/backup/jax/download/adata/).
 
 2. **Pancreatic cancer**  
    Malignant epithelial cells are organized into cancer-associated states, including normal-like ductal states, transitional Kras-mutant/metaplastic states, and malignant ductal states.
+   This dataset was produced  by Scott Lowe's lab, Memorial Sloan Kettering Cancer Center, New York. Description of the project is available [here](https://www.mskcc.org/research/ski/labs/scott-lowe/accelerating-discovery-using-mouse-models), and the specific dataset used (GSE207938_ProgressionCohort.h5ad) [here](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE207938).
 
 The developmental and cancer datasets are harmonized through preprocessing, gene matching, normalization, and embedding-based representation. Particular care is taken to avoid over-interpreting coarse labels such as “ductal,” since some cancer-associated ductal-like populations may reflect mixed epithelial, biliary-like, metaplastic, or malignant programs rather than a pure developmental ductal identity.
 
@@ -46,7 +48,7 @@ The analysis proceeds in four broad stages.
 
 First, developmental and cancer single-cell datasets are assembled and preprocessed into comparable gene-expression spaces. The preprocessing steps include filtering, normalization, gene-symbol harmonization, and preparation of input matrices for downstream modeling.
 
-Second, a BERT-style model is applied to single-cell expression profiles. This produces learned representations of cells and genes that can be used to compare developmental and malignant transcriptional states.
+Second, a BERT-style model is applied to single-cell expression profiles. This produces learned representations of cells that can be used to compare developmental and malignant transcriptional states.
 
 Third, developmental reference axes are defined from normal epithelial populations. Cancer cells and cancer-state centroids are then projected into this developmental coordinate system. This allows the project to quantify whether malignant states are positioned near developmental identities and whether transitions between cancer states align with developmental lineage directions.
 
@@ -82,8 +84,7 @@ Fourth, the geometric results are interpreted biologically using marker genes an
 ---
 
 ### Key Analyses
-
-DevCancer includes several linked analyses:
+OncoDevFormer includes several linked analyses:
 
 - construction of a developmental epithelial reference space;
 - comparison of developmental and cancer expression distributions;
@@ -102,7 +103,7 @@ DevCancer includes several linked analyses:
 
 Epithelial cancers are often described as aberrant reactivations of developmental programs. While this idea is biologically plausible, it can also become too simplistic. A malignant cell may resemble a developmental state in one coordinate system while still varying along directions that are not part of normal developmental progression.
 
-DevCancer addresses this distinction directly. The project asks whether pancreatic cancer states merely occupy positions along developmental lineages or whether they generate structured malignant variation outside the developmental reference space.
+OncoDevFormer addresses this distinction directly. The project asks whether pancreatic cancer states merely occupy positions along developmental lineages or whether they generate structured malignant variation outside the developmental reference space.
 
 The results are intended to support a more careful interpretation: development provides an informative coordinate system for describing cancer states, but it does not necessarily explain the dominant axes of malignant progression.
 
