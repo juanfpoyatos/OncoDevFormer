@@ -30,3 +30,12 @@ __pycache__/
 # Project-specific large files
 data/development/adata_JAX_*.*
 data/pdac/GSE207938_ProgressionCohort.h5ad
+
+# Model outputs, checkpoints, and large arrays
+data/models/
+data/out/
+*.pt
+*.npy
+*.bin
+*.safetensors
+checkpoint-*/
