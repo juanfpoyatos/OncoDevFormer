@@ -1,0 +1,32 @@
+test_env/
+__pycache__/
+.ipynb_checkpoints/
+
+# Local Python environments
+test_env/
+__pycache__/
+.ipynb_checkpoints/
+
+# Large/sensitive data files not tracked in Git
+data/development/adata_JAX_*.*
+data/pdac/GSE207938_ProgressionCohort.h5ad
+
+# Local environments and notebook/cache files
+test_env/
+__pycache__/
+.ipynb_checkpoints/
+
+# Large single-cell data / raw data
+*.h5ad
+*.h5
+*.loom
+*.zarr/
+*.zarr
+*.gtf
+*.gtf.gz
+*.csv
+*.pdf
+
+# Project-specific large files
+data/development/adata_JAX_*.*
+data/pdac/GSE207938_ProgressionCohort.h5ad
