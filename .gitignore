@@ -39,3 +39,12 @@ data/out/
 *.bin
 *.safetensors
 checkpoint-*/
+
+# Model outputs, checkpoints, and large arrays
+data/models/
+data/out/
+*.npy
+*.pt
+*.bin
+*.safetensors
+checkpoint-*/
