@@ -48,3 +48,4 @@ data/out/
 *.bin
 *.safetensors
 checkpoint-*/
+.git_old_before_history_cleanup/
