@@ -81,6 +81,38 @@ Fourth, the geometric results are interpreted biologically using marker genes an
 - `Results_MousePrograms.ipynb`  
   Mouse cancer-program analysis. Scores curated mouse transcriptional programs across cancer states to annotate recurrent tumor-intrinsic and stress-response programs.
 
+
+#### Additional experiments and robustness analyses (AE notebooks; Supplementary Table S3)
+
+The original notebooks above document the initial OncoDevFormer analysis. The **additional experiments (AE)** were developed for the manuscript revision to revise that workflow, generate the definitive representations, and examine whether its biological conclusions are robust to data selection, model training, reference definitions, and geometric assumptions. These analyses are described in the supplementary material in connection with **Table S3**. They complement rather than replace the descriptions of the original notebooks above.
+
+The revised notebooks are listed below in analysis order. `AE1b` establishes the common audited inputs and representations for the downstream experiments; individual AE notebooks then examine distinct potential sources of uncertainty. The notebook descriptions here are based on their documented aims and analyses, not a claim that every generated diagnostic is included in the paper.
+
+| Additional experiment | Notebook | Main question and analyses |
+| --- | --- | --- |
+| **AE1 — Audit of the original computational pipeline** | [`AE1_FINAL.ipynb`](notebooks/AE1_FINAL.ipynb) | Reconstructs the original developmental and pancreatic-cancer cell selection, epithelial-filtering decisions, gene harmonization, MLM input preparation, and masking procedure. Identifies issues requiring correction before the definitive analyses, while documenting the provenance of earlier results. |
+| **AE1b — Audited model reconstruction** | [`AE1b_FINAL.ipynb`](notebooks/AE1b_FINAL.ipynb) | Rebuilds the corrected developmental corpus and aligned gene matrices; uses a common tokenizer and corrected MLM masking to train matched **joint** (development + cancer) and **development-only** encoders across seeds. Saves the authoritative manifest, cell-order checks, and embeddings used downstream. |
+| **AE2 — Developmental subspace and residual-structure sensitivity** | [`AE2_FINAL.ipynb`](notebooks/AE2_FINAL.ipynb) | Reassesses projection of cancer states into developmental PCA subspaces across numbers of components; examines reconstruction distributions, appropriate null/benchmark comparisons, residual organization, and biological-sample-aware uncertainty in the audited joint representation. |
+| **AE3 — Biological definition and validation of developmental directions** | [`AE3_FINAL.ipynb`](notebooks/AE3_FINAL.ipynb) | Revisits the Qiu developmental labels and their temporal coverage, validates pancreatic lineage-related reference states with markers, and recomputes early/late/total malignant displacement alignment with revised developmental directions. Includes stage-aware weighting, sample-aware summaries, and checks of malignant-state positioning. |
+| **AE4 — Joint versus development-only representation learning** | [`AE4_FINAL.ipynb`](notebooks/AE4_FINAL.ipynb) | Compares matched joint and development-only MLM encoders, holding preprocessing and developmental biological definitions fixed. Tests whether projection, directional alignment, and malignant residual structure depend on having included cancer cells during representation training. |
+| **AE5 — Independent normal-pancreas calibration** | [`AE5_FINAL.ipynb`](notebooks/AE5_FINAL.ipynb) | Uses held-out developmental cells and an independent adult-normal pancreas reference from **Tabula Muris** to calibrate developmental projections and residuals. Assesses adult acinar, ductal, and endocrine populations separately and checks the sensitivity of external queries to model/domain-token choices. |
+| **AE6 — Comparison with alternative representations** | [`AE6_FINAL.ipynb`](notebooks/AE6_FINAL.ipynb) | Compares the audited MLM with conventional normalized-expression PCA and **scVI** representations. Repeats developmental projection, malignant displacement, and residual analyses, including comparisons matched by the amount of developmental variance represented rather than assuming that equal PC counts are directly comparable. |
+| **AE7 — Local developmental geometry** | [`AE7_FINAL.ipynb`](notebooks/AE7_FINAL.ipynb) | Tests whether apparently development-unexplained malignant variation could result from curvature of the developmental manifold rather than a distinct direction. Uses local developmental tangent spaces, held-out developmental and adult-normal calibration, matched-dimensional random benchmarks, and neighborhood/dimensionality sensitivity checks. |
+
+**Analysis sequence.** Start with the historical notebooks for context and **AE1** for the revision; use **AE1b** to create the definitive aligned data, paired encoders, and manifest. **AE2–AE3** reconstruct the primary geometric and biological analyses. **AE4–AE7** test training-composition, normal-reference, representation, and manifold-geometry dependencies. Several downstream analyses reuse the developmental split and adult-normal query set established in AE5; consult each notebook's path and provenance checks before running it.
+
+**Interpretive scope.** Developmental *proximity* of malignant cells and developmental *alignment* of changes between malignant states are distinct quantities. Projection fractions depend on the learned representation and the dimensions of the reference, whereas the directional and biological comparisons are used to assess which conclusions persist across controls. The AE series is intended to document these distinctions, not to assert that a geometric residual is automatically cancer-specific.
+
+#### Revised manuscript analyses and figure-production notebooks
+
+The following notebooks assemble or interpret outputs from the revised pipeline and are distinct from the AE controls:
+
+- [`Edited_Results_1_developmental_PC_annotation.ipynb`](notebooks/Edited_Results_1_developmental_PC_annotation.ipynb) — Biological annotation of the leading developmental principal components, including independent-seed checks.
+- [`Edited_Results_4_malignant_state_programs.ipynb`](notebooks/Edited_Results_4_malignant_state_programs.ipynb) — Developmental and cancer-program scoring across malignant states, with biological-sample-aware summaries and interpretation of residual axes.
+- [`Edited_main_figure_panels_v5.ipynb`](notebooks/Edited_main_figure_panels_v5.ipynb) — Recreates computational panels used in the revised main figures from the audited outputs; final figure layout can be assembled separately.
+
+**File naming.** The supplementary analyses are designated **AE1, AE1b, and AE2–AE7** in the revised manuscript and repository. Some notebook headings, code paths, and cached output filenames may still carry their earlier `WP` labels; those internal provenance/output identifiers should not be changed without updating the corresponding dependencies. The GitHub notebook filenames listed above assume the revised files have been renamed `AE*_FINAL.ipynb` before upload.
+
 ---
 
 ### Key Analyses
